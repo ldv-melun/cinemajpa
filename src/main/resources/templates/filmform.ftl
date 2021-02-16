@@ -9,7 +9,7 @@
 
     Résumé : <textarea name="resume" rows="10" cols="80">${film.resume}</textarea><br/>
 
-    Affiche : <img src="/images/affiches/${film.afficheNom}"><br/>
+    Affiche : <img src="/img/film/${film.id}"><br/>
 
     Fichier Affiche : <input type="file" name="affiche"><br/>
 

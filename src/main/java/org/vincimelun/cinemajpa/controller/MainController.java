@@ -38,15 +38,16 @@ public class MainController {
 
     @PostMapping("/film")
     public String postFilm(@ModelAttribute(name="film") FilmFormDTO film){
-        // creer dans CinemaService la méthode de creation/modification du film à partir du DTO
-        MultipartFile file = film.getAffiche();
-        if(!file.isEmpty()) {
-            System.out.println("Nom du champ     : "+file.getName());
-            System.out.println("Nom du fichier   : "+file.getOriginalFilename());
-            System.out.println("Type de fichier  : "+file.getContentType());
-            System.out.println("Taille en octets : "+file.getSize());
-        }
-        System.out.println("Id réalisateur   : "+film.getRealisateurId());
+//        // creer dans CinemaService la méthode de creation/modification du film à partir du DTO
+//        MultipartFile file = film.getAffiche();
+//        if(!file.isEmpty()) {
+//            System.out.println("Nom du champ     : "+file.getName());
+//            System.out.println("Nom du fichier   : "+file.getOriginalFilename());
+//            System.out.println("Type de fichier  : "+file.getContentType());
+//            System.out.println("Taille en octets : "+file.getSize());
+//        }
+//        System.out.println("Id réalisateur   : "+film.getRealisateurId());
+        cinemaService.updateFilm(film);
         return "redirect:/";
     }
 

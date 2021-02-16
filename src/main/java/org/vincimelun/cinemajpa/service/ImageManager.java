@@ -24,7 +24,7 @@ public class ImageManager {
 
 
     public int savePoster(Film f, InputStream is){
-        f.setAfficheNom(save("f", "affciches", is));
+        f.setAfficheNom(save("f", "affiches", is));
         return 0;
     }
 
