@@ -11,12 +11,12 @@ import org.vincimelun.cinemajpa.model.Personne;
 import java.util.List;
 
 @Service
-public class CinemaDataSource {
+public class CinemaService {
     FilmRepository filmRepository;
     PersonneRepository personneRepository;
 
     @Autowired
-    public CinemaDataSource(FilmRepository filmRepository, PersonneRepository personneRepository){
+    public CinemaService(FilmRepository filmRepository, PersonneRepository personneRepository){
         this.filmRepository = filmRepository;
         this.personneRepository = personneRepository;
     }
