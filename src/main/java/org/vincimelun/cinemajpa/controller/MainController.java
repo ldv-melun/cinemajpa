@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.vincimelun.cinemajpa.formdata.FilmFormDTO;
 import org.vincimelun.cinemajpa.formdata.PersonFormDTO;
+import org.vincimelun.cinemajpa.formdata.RoleFormDTO;
 import org.vincimelun.cinemajpa.model.Film;
 import org.vincimelun.cinemajpa.model.Personne;
 import org.vincimelun.cinemajpa.service.CinemaService;
@@ -40,6 +41,9 @@ public class MainController {
         List<Personne> personnes = cinemaService.getPersonnes();
         model.addAttribute("film", dto);
         model.addAttribute("persons", personnes);
+        RoleFormDTO roleDTO = new RoleFormDTO();
+        roleDTO.setFilmId(film.getId());
+        model.addAttribute("role", roleDTO);
         return "filmform";
     }
 
@@ -95,5 +99,17 @@ public class MainController {
         model.addAttribute("film", new FilmFormDTO());
         model.addAttribute("persons", cinemaService.getPersonnes());
         return "filmform";
+    }
+
+    @GetMapping("/film/delete/{id}")
+    public String deleteFilm(@PathVariable(name = "id") long id){
+        cinemaService.deleteFilm(id);
+        return "redirect:/";
+    }
+
+    @PostMapping("/role/add")
+    public String addRole(@ModelAttribute RoleFormDTO roleFormDTO){
+        cinemaService.saveRole(roleFormDTO);
+        return "redirect:/film/"+roleFormDTO.getFilmId();
     }
 }

@@ -35,5 +35,26 @@
 
     <input type="submit" value="Valider"><br/>
 </form>
+
+<form
+        action="#"
+        method="post"
+        th:action="@{'/role/add'}"
+        th:object="${role}">
+    <input th:field="*{filmId}" type="hidden">
+    <input th:field="*{id}" type="hidden">
+    <select name="acteurId" id="acteurId">
+        <option th:each="person: ${persons}"
+                th:value="${person.id}"
+                th:text="${person.prenom}+' '+${person.nom}"
+                th:selected="${person.id} == *{acteurId}">
+            Prénom Nom
+        </option>
+    </select><br/>
+    Role : <input th:field="*{name}" type="text"><br/>
+    Rang : <input th:field="*{order}" type="number"><br/>
+    <input type="submit" value="Ajouter rôle"><br/>
+</form>
+
 </body>
 </html>
