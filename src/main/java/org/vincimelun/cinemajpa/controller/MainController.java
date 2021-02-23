@@ -30,8 +30,15 @@ public class MainController {
     @GetMapping("/film/{id}")
     public String film(Model model, @PathVariable(name="id") Long id){
         Film film = cinemaService.getFilm(id);
+        FilmFormDTO dto = new FilmFormDTO();
+        dto.setId(film.getId());
+        dto.setAfficheNom(film.getAfficheNom());
+        dto.setTitre(film.getTitre());
+        dto.setResume(film.getResume());
+        dto.setRealisateurId(film.getRealisateur().getId());
+        dto.setNote(film.getNote());
         List<Personne> personnes = cinemaService.getPersonnes();
-        model.addAttribute("film", film);
+        model.addAttribute("film", dto);
         model.addAttribute("persons", personnes);
         return "filmform";
     }

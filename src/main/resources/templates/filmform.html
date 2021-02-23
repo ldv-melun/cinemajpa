@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Film : '+${film.titre}">Film : Le juge et l'assassin</title>
+</head>
+<body>
+<form
+        action="#"
+        enctype="multipart/form-data"
+        method="post"
+        th:action="@{/film}"
+        th:object="${film}">
+    <input th:field="*{id}" type="hidden">
+    <input th:field="*{afficheNom}" type="hidden">
+
+    Titre : <input th:field="*{titre}" type="text"><br/>
+
+    Résumé : <textarea cols="80" rows="10" th:field="*{resume}">Résumé du film</textarea><br/>
+
+    Affiche : <img src="affiche.jpg" th:src="@{'/img/film/'+*{id}}"><br/>
+
+    Fichier Affiche : <input th:field="*{affiche}" type="file"><br/>
+
+    Note : <input th:field="*{note}" type="number"><br/>
+
+    <select name="realisateurId" id="realisateurId">
+        <option th:each="person: ${persons}"
+                th:value="${person.id}"
+                th:text="${person.prenom}+' '+${person.nom}"
+                th:selected="${person.id} == *{realisateurId}">
+        </option>
+    </select><br/>
+
+    <input type="submit" value="Valider"><br/>
+</form>
+</body>
+</html>
