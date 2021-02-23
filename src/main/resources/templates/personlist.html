@@ -10,5 +10,8 @@
         <span th:text="${person.prenom}+' '+${person.nom}">Prénom Nom </span> <a href="#" th:href="@{'/person/'+${person.id}}">Edit</a>
     </li>
 </ul>
+
+<a href="#" th:href="@{'/person/add'}">Ajouter une personne</a><br/>
+
 </body>
 </html>

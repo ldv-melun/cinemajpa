@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.vincimelun.cinemajpa.formdata.FilmFormDTO;
 import org.vincimelun.cinemajpa.formdata.PersonFormDTO;
 import org.vincimelun.cinemajpa.model.Film;
@@ -55,7 +54,7 @@ public class MainController {
 //            System.out.println("Taille en octets : "+file.getSize());
 //        }
 //        System.out.println("Id réalisateur   : "+film.getRealisateurId());
-        cinemaService.updateFilm(film);
+        cinemaService.saveFilm(film);
         return "redirect:/";
     }
 
@@ -67,7 +66,7 @@ public class MainController {
 
     @PostMapping("/person")
     public String postPerson(@ModelAttribute(name="person") PersonFormDTO dto){
-        cinemaService.updatePerson(dto);
+        cinemaService.savePerson(dto);
         return "redirect:/person";
     }
 
@@ -84,4 +83,17 @@ public class MainController {
         return "personform";
     }
 
+    @GetMapping("/person/add")
+    public String addPerson(Model model){
+        model.addAttribute("person", new PersonFormDTO());
+        return "personform";
+
+    }
+
+    @GetMapping("/film/add")
+    public String addFilm(Model model){
+        model.addAttribute("film", new FilmFormDTO());
+        model.addAttribute("persons", cinemaService.getPersonnes());
+        return "filmform";
+    }
 }

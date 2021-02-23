@@ -35,23 +35,24 @@ public class CinemaService {
     }
 
     public Personne getPersonne(Long id){
-        return personneRepository.findById(id).get();
+        return personneRepository.findById(id).orElse(new Personne());
     }
 
     public Film getFilm(Long id){
-        return filmRepository.findById(id).get();
+        return filmRepository.findById(id).orElse(new Film());
     }
 
     public void saveFilm(Film film){
         filmRepository.save(film);
     }
 
-    public void updateFilm(FilmFormDTO filmDTO){
+    public void saveFilm(FilmFormDTO filmDTO){
         Film filmDB = filmRepository.findById(filmDTO.getId()).orElse(new Film());
+        //Film filmDB = getFilm(filmDTO.getId());
         filmDB.setTitre(filmDTO.getTitre());
         filmDB.setResume(filmDTO.getResume());
         filmDB.setNote(filmDTO.getNote());
-        Personne realisateur = personneRepository.findById(filmDTO.getRealisateurId()).get();
+        Personne realisateur = personneRepository.findById(filmDTO.getRealisateurId()).orElse(new Personne());
         filmDB.setRealisateur(realisateur);
         // modifier l'affiche si nécessaire => si un fichier a été uploadé
         if(!filmDTO.getAffiche().isEmpty()) {
@@ -65,7 +66,7 @@ public class CinemaService {
         filmRepository.save(filmDB);
     }
 
-    public void updatePerson(PersonFormDTO dto) {
+    public void savePerson(PersonFormDTO dto) {
         Personne person = personneRepository.findById(dto.getId()).orElse(new Personne());
         person.setNom(dto.getNom());
         person.setPrenom(dto.getPrenom());

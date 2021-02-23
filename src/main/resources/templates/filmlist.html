@@ -9,5 +9,8 @@
 <ul th:each="film: ${films}">
     <li><span th:text="${film.titre}">Titre du film</span> <a href="#" th:href="@{'/film/'+${film.id}}">Edit</a> </li>
 </ul>
+
+<a href="#" th:href="@{'/film/add'}">Ajouter un film</a><br/>
+
 </body>
 </html>
