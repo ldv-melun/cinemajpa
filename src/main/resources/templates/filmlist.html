@@ -7,7 +7,7 @@
 <body>
 <h1>Liste des films</h1>
 <ul th:each="film: ${films}">
-    <li><span th:text="${film.titre}">Titre du film</span> <a th:href="@{'/film/'+${film.id}}">Edit</a> </li>
+    <li><span th:text="${film.titre}">Titre du film</span> <a href="#" th:href="@{'/film/'+${film.id}}">Edit</a> </li>
 </ul>
 </body>
 </html>

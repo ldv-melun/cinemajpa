@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.vincimelun.cinemajpa.formdata.FilmFormDTO;
+import org.vincimelun.cinemajpa.formdata.PersonFormDTO;
 import org.vincimelun.cinemajpa.model.Film;
 import org.vincimelun.cinemajpa.model.Personne;
 import org.vincimelun.cinemajpa.service.CinemaService;
@@ -56,6 +57,31 @@ public class MainController {
 //        System.out.println("Id réalisateur   : "+film.getRealisateurId());
         cinemaService.updateFilm(film);
         return "redirect:/";
+    }
+
+    @GetMapping("/person")
+    public String listPersons(Model model){
+        model.addAttribute("persons", cinemaService.getPersonnes());
+        return "personlist";
+    }
+
+    @PostMapping("/person")
+    public String postPerson(@ModelAttribute(name="person") PersonFormDTO dto){
+        cinemaService.updatePerson(dto);
+        return "redirect:/person";
+    }
+
+    @GetMapping("/person/{id}")
+    public String person(Model model, @PathVariable(name = "id") Long id){
+        Personne person = cinemaService.getPersonne(id);
+        PersonFormDTO dto = new PersonFormDTO();
+        dto.setId(person.getId());
+        dto.setNom(person.getNom());
+        dto.setPrenom(person.getPrenom());
+        dto.setAnneeNaissance(person.getAnneeNaiscance());
+        dto.setPhoto(person.getPhoto());
+        model.addAttribute("person", dto);
+        return "personform";
     }
 
 }

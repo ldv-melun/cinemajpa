@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.vincimelun.cinemajpa.dao.FilmRepository;
 import org.vincimelun.cinemajpa.dao.PersonneRepository;
 import org.vincimelun.cinemajpa.formdata.FilmFormDTO;
+import org.vincimelun.cinemajpa.formdata.PersonFormDTO;
 import org.vincimelun.cinemajpa.model.Film;
 import org.vincimelun.cinemajpa.model.Personne;
 
@@ -46,7 +47,7 @@ public class CinemaService {
     }
 
     public void updateFilm(FilmFormDTO filmDTO){
-        Film filmDB = filmRepository.findById(filmDTO.getId()).get();
+        Film filmDB = filmRepository.findById(filmDTO.getId()).orElse(new Film());
         filmDB.setTitre(filmDTO.getTitre());
         filmDB.setResume(filmDTO.getResume());
         filmDB.setNote(filmDTO.getNote());
@@ -62,5 +63,20 @@ public class CinemaService {
         }
 
         filmRepository.save(filmDB);
+    }
+
+    public void updatePerson(PersonFormDTO dto) {
+        Personne person = personneRepository.findById(dto.getId()).orElse(new Personne());
+        person.setNom(dto.getNom());
+        person.setPrenom(dto.getPrenom());
+        person.setAnneeNaiscance(dto.getAnneeNaissance());;
+        if(!dto.getFicPhoto().isEmpty()){
+            try{
+                imageManager.savePhoto(person, dto.getFicPhoto().getInputStream());
+            } catch (IOException ioe){
+                System.out.println("Erreur : "+ioe.getMessage());
+            }
+        }
+        personneRepository.save(person);
     }
 }
