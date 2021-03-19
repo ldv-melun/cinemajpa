@@ -60,7 +60,7 @@ public class ImageManager {
     }
 
     public InputStream retreivePhoto(String fileName){
-        return retreiveImage("personnes", fileName);
+        return retreiveImage("photos", fileName);
     }
 
     public InputStream retreivePoster(String fileName){

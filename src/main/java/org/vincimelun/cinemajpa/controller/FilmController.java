@@ -1,9 +1,14 @@
 package org.vincimelun.cinemajpa.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.vincimelun.cinemajpa.formdata.FilmFormDTO;
 import org.vincimelun.cinemajpa.formdata.PersonFormDTO;
 import org.vincimelun.cinemajpa.formdata.RoleFormDTO;
@@ -14,21 +19,29 @@ import org.vincimelun.cinemajpa.service.CinemaService;
 import java.util.List;
 
 @Controller
-public class MainController {
+public class FilmController {
+
+    Logger logger = LoggerFactory.getLogger(FilmController.class);
+
     private CinemaService cinemaService;
 
     @Autowired
-    public MainController(CinemaService cinemaService){
+    public FilmController(CinemaService cinemaService){
         this.cinemaService = cinemaService;
     }
 
-    @GetMapping("/")
+    @GetMapping(value = {"/", "/film/index"})
     public String index(Model model){
         model.addAttribute("films", cinemaService.getFilms());
-        return "filmlist";
+        return "film/list";
     }
 
-    @GetMapping("/film/{id}")
+    @GetMapping("/film/detail/{id}")
+    public String detail(Model model){
+        return "todo";
+    }
+
+    @GetMapping("/film/edit/{id}")
     public String film(Model model, @PathVariable(name="id") Long id){
         Film film = cinemaService.getFilm(id);
         FilmFormDTO dto = new FilmFormDTO();
@@ -44,7 +57,7 @@ public class MainController {
         RoleFormDTO roleDTO = new RoleFormDTO();
         roleDTO.setFilmId(film.getId());
         model.addAttribute("role", roleDTO);
-        return "filmform";
+        return "film/form";
     }
 
     @PostMapping("/film")
@@ -62,43 +75,11 @@ public class MainController {
         return "redirect:/";
     }
 
-    @GetMapping("/person")
-    public String listPersons(Model model){
-        model.addAttribute("persons", cinemaService.getPersonnes());
-        return "personlist";
-    }
-
-    @PostMapping("/person")
-    public String postPerson(@ModelAttribute(name="person") PersonFormDTO dto){
-        cinemaService.savePerson(dto);
-        return "redirect:/person";
-    }
-
-    @GetMapping("/person/{id}")
-    public String person(Model model, @PathVariable(name = "id") Long id){
-        Personne person = cinemaService.getPersonne(id);
-        PersonFormDTO dto = new PersonFormDTO();
-        dto.setId(person.getId());
-        dto.setNom(person.getNom());
-        dto.setPrenom(person.getPrenom());
-        dto.setAnneeNaissance(person.getAnneeNaiscance());
-        dto.setPhoto(person.getPhoto());
-        model.addAttribute("person", dto);
-        return "personform";
-    }
-
-    @GetMapping("/person/add")
-    public String addPerson(Model model){
-        model.addAttribute("person", new PersonFormDTO());
-        return "personform";
-
-    }
-
     @GetMapping("/film/add")
     public String addFilm(Model model){
         model.addAttribute("film", new FilmFormDTO());
         model.addAttribute("persons", cinemaService.getPersonnes());
-        return "filmform";
+        return "film/form";
     }
 
     @GetMapping("/film/delete/{id}")
@@ -107,9 +88,10 @@ public class MainController {
         return "redirect:/";
     }
 
-    @PostMapping("/role/add")
+    @PostMapping("/film/role/add")
     public String addRole(@ModelAttribute RoleFormDTO roleFormDTO){
+        logger.info("Create role : " + roleFormDTO.toString());
         cinemaService.saveRole(roleFormDTO);
-        return "redirect:/film/"+roleFormDTO.getFilmId();
+        return "redirect:/";
     }
 }

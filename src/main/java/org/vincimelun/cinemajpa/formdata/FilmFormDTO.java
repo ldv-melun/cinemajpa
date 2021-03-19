@@ -61,7 +61,7 @@ public class FilmFormDTO {
         this.realisateurId = realisateurId;
     }
 
-    public MultipartFile getAffiche() {
+    public MultipartFile  getAffiche() {
         return affiche;
     }
 

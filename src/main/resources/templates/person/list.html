@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: menu(activeTab='actors')"/>
+
+<main role="main">
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="display-4">Personnes</h4>
+            <ul>
+                <li th:each="person: ${persons}">
+                    <span th:text="${person.prenom}+' '+${person.nom}">Prénom Nom </span> <a href="#" th:href="@{'/person/'+${person.id}}">Edit</a>
+                </li>
+            </ul>
+
+            <a href="#" th:href="@{'/person/add'}">Ajouter une personne</a><br/>
+        </div>
+    </div>
+</main>
+
+<div th:replace="fragments/footer.html :: footer"/>
+
+</body>
+</html>

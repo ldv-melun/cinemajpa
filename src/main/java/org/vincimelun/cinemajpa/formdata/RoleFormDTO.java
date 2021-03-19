@@ -46,4 +46,15 @@ public class RoleFormDTO {
     public void setFilmId(long filmId) {
         this.filmId = filmId;
     }
+
+    @Override
+    public String toString() {
+        return "RoleFormDTO{" +
+                "id=" + id +
+                ", order=" + order +
+                ", name='" + name + '\'' +
+                ", acteurId=" + acteurId +
+                ", filmId=" + filmId +
+                '}';
+    }
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: menu(activeTab='films')"/>
+
+<main role="main">
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="display-4">Détail</h4>
+            <h5>Titre : <span th:text="${film.titre}"></span></h5>
+            <h5>Note : <span th:text="${film.rating}"></span></h5>
+
+            <div class="card" style="width: 15rem;  margin-top: 2px; margin-bottom: 2px;">
+                <img class="image-rounded img-fluid" type="width:100%"
+                     th:src="@{'/film/imagename/'+${film.affiche}}"/>
+                <div class="card-body">
+                    <p class="card-text" th:text="${film.titre}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+<div th:replace="fragments/footer.html :: footer"/>
+
+</body>
+</html>

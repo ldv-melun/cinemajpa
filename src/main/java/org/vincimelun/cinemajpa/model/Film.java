@@ -26,9 +26,11 @@ public class Film {
     @Lob
     @Column(name = "SUMMARY", nullable = true)
     private String resume;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "FILM_DIRECTOR")
     private Personne realisateur;
+
     @OneToMany(mappedBy = "film")
     private Collection<Role> acteurs;
 

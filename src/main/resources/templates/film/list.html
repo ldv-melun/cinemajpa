@@ -1,0 +1,31 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: menu(activeTab='films')"/>
+
+<main role="main">
+
+    <div class="jumbotron">
+        <div class="container">
+            <h4 class="display-4">Films</h4>
+            <table>
+                <tr th:each="film: ${films}">
+                    <td><span th:utext="${film.titre}"></span>
+                        <a href="#" th:href="@{'/film/detail/'+${film.id}}">detail</a>
+                        <a href="#" th:href="@{'/film/edit/'+${film.id}}">edit</a>
+                    </td>
+                </tr>
+            </table>
+            <hr/>
+            <a href="#" th:href="@{'/film/add'}">Ajouter un film</a><br/>
+        </div>
+    </div>
+</main>
+
+<div th:replace="fragments/footer.html :: footer"/>
+
+</body>
+</html>

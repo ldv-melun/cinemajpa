@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: menu(activeTab='actors')"/>
+
+<main role="main">
+  <div class="jumbotron">
+    <div class="container">
+      <form
+              method="post"
+              action="#"
+              enctype="multipart/form-data"
+              th:action="@{/person}"
+              th:object="${person}">
+
+        <input th:field="*{id}" type="hidden">
+        <input th:field="*{photo}" type="hidden">
+
+        Nom : <input th:field="*{nom}" type="text"><br/>
+        Prenom : <input th:field="*{prenom}" type="text"><br/>
+        Année de naissance : <input th:field="*{anneeNaissance}" type="number"><br/>
+        Fichier photo : <input th:field="*{ficPhoto}" type ="file"><br>
+        Photo : <img src="photo.jpg" th:src="@{'/img/person/'+*{id}}"><br/>
+        <input type="submit" value="Valider"><br/>
+
+      </form>
+
+    </div>
+  </div>
+</main>
+
+<div th:replace="fragments/footer.html :: footer"/>
+
+</body>
+</html>

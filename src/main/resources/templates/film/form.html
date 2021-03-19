@@ -1,0 +1,72 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <th:block th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+<div th:replace="fragments/header :: menu(activeTab='films')"/>
+
+<main role="main">
+  <div class="jumbotron">
+    <div class="container">
+      <form
+              action="#"
+              enctype="multipart/form-data"
+              method="post"
+              th:action="@{/film}"
+              th:object="${film}">
+        <input th:field="*{id}" type="hidden">
+        <input th:field="*{afficheNom}" type="hidden">
+
+        Titre : <input th:field="*{titre}" type="text"><br/>
+
+        Résumé : <textarea cols="80" rows="10" th:field="*{resume}">Résumé du film</textarea><br/>
+
+        Affiche : <img src="affiche.jpg" th:src="@{'/img/film/'+*{id}}"><br/>
+
+        Fichier Affiche : <input th:field="*{affiche}" type="file"><br/>
+
+        Note : <input th:field="*{note}" type="number"><br/>
+
+        <select name="realisateurId" id="realisateurId">
+          <option th:each="person: ${persons}"
+                  th:value="${person.id}"
+                  th:text="${person.prenom}+' '+${person.nom}"
+                  th:selected="${person.id} == *{realisateurId}">
+            Prénom Nom
+          </option>
+        </select><br/>
+
+        <input type="submit" value="Valider"><br/>
+      </form>
+      <hr/>
+      <p th:if="${role}">Ajout d'un rôle </p>
+      <form
+              th:if="${role}"
+              action="#"
+              method="post"
+              th:action="@{'/film/role/add'}"
+              th:object="${role}">
+        <input th:field="*{filmId}" type="hidden">
+        <input th:field="*{id}" type="hidden">
+        <select name="acteurId" id="acteurId">
+          <option th:each="person: ${persons}"
+                  th:value="${person.id}"
+                  th:text="${person.prenom}+' '+${person.nom}"
+                  th:selected="${person.id} == *{acteurId}">
+            Prénom Nom
+          </option>
+        </select><br/>
+        Role : <input th:field="*{name}" type="text"><br/>
+        Rang : <input th:field="*{order}" type="number"><br/>
+        <input type="submit" value="Ajouter rôle"><br/>
+      </form>
+
+    </div>
+  </div>
+</main>
+
+<div th:replace="fragments/footer.html :: footer"/>
+
+</body>
+</html>
