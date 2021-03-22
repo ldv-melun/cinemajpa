@@ -44,13 +44,7 @@ public class FilmController {
     @GetMapping("/film/edit/{id}")
     public String film(Model model, @PathVariable(name="id") Long id){
         Film film = cinemaService.getFilm(id);
-        FilmFormDTO dto = new FilmFormDTO();
-        dto.setId(film.getId());
-        dto.setAfficheNom(film.getAfficheNom());
-        dto.setTitre(film.getTitre());
-        dto.setResume(film.getResume());
-        dto.setRealisateurId(film.getRealisateur().getId());
-        dto.setNote(film.getNote());
+        FilmFormDTO dto = convertFilmEntityToFilmFormDTO(film);
         List<Personne> personnes = cinemaService.getPersonnes();
         model.addAttribute("film", dto);
         model.addAttribute("persons", personnes);
@@ -58,6 +52,24 @@ public class FilmController {
         roleDTO.setFilmId(film.getId());
         model.addAttribute("role", roleDTO);
         return "film/form";
+    }
+
+    /**
+     * convert Film to FilmFormDTO
+     * @see  https://www.baeldung.com/entity-to-and-from-dto-for-a-java-spring-application
+     *
+     * @param film
+     * @return image dto of film
+     */
+    private FilmFormDTO convertFilmEntityToFilmFormDTO(Film film) {
+        FilmFormDTO dto = new FilmFormDTO();
+        dto.setId(film.getId());
+        dto.setAfficheNom(film.getAfficheNom());
+        dto.setTitre(film.getTitre());
+        dto.setResume(film.getResume());
+        dto.setRealisateurId(film.getRealisateur().getId());
+        dto.setNote(film.getNote());
+        return dto;
     }
 
     @PostMapping("/film")
