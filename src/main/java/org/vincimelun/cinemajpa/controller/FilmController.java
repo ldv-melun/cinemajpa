@@ -82,7 +82,6 @@ public class FilmController {
 //            System.out.println("Type de fichier  : "+file.getContentType());
 //            System.out.println("Taille en octets : "+file.getSize());
 //        }
-//        System.out.println("Id réalisateur   : "+film.getRealisateurId());
         cinemaService.saveFilm(film);
         return "redirect:/";
     }
